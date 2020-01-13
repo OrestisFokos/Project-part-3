@@ -37,15 +37,6 @@ actual_results = actual_results.drop(actual_results.columns[[0]], axis=1)
 
 
 
-# theloume na ftiaksoume to N2 xwris to 2o layer tou.
-print('\n creating new model\n')
-new_model = keras.Sequential()
-for layer in model.layers[:-1]:
-    new_model.add(layer)
-	
-#pws akrivws kserw ta losses, metrics, optimizers pou eixe xrisimopoiisei autos gia to compile tou montelou tou?
-new_model.compile(optimizer=optimizers.RMSprop(0.01),loss=losses.CategoricalCrossentropy(),metrics=[metrics.CategoricalAccuracy()])
-
 # ERWTHMA A
 err = np.zeros((actual_results.shape[0],7))
 percent_err = np.zeros((actual_results.shape[0],7))
@@ -59,15 +50,25 @@ for i in range(err.shape[0]):
 		else:
 			percent_err[i][j] = err[i][j] /  (actual_results.iloc[i,j] )
 		sq_err[i][j] = (err[i][j]) ** 2
-		
+
 mae = np.mean(err)
 mape = np.mean(percent_err)
 mse = np.mean(sq_err)
 
 print('\nMAE =',mae, ' MAPE =',mape,' MSE = ', mse, '\n' )
-print('---')		
+print('---')
 
 # TELOS ERWTHMATOS A
+
+
+# theloume na ftiaksoume to N2 xwris to 2o layer tou.
+print('\n creating new model\n')
+new_model = keras.Sequential()
+for layer in model.layers[:-1]:
+    new_model.add(layer)
+
+#pws akrivws kserw ta losses, metrics, optimizers pou eixe xrisimopoiisei autos gia to compile tou montelou tou?
+new_model.compile(optimizer=optimizers.RMSprop(0.01),loss=losses.CategoricalCrossentropy(),metrics=[metrics.CategoricalAccuracy()])
 
 
 print('\nmodel summary')
