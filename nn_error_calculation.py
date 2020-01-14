@@ -12,7 +12,7 @@ import keras
 from keras.models import load_model
 from keras import layers, optimizers, losses, metrics
 
-model = load_model('WindDenseNN.h5', compile=False)
+model = load_model('./H5/WindDenseNN.h5', compile=False)
 print('loaded model.')
 # summarize the structure of the model
 summary = model.summary()
@@ -21,7 +21,7 @@ weights = model.layers[0].get_weights()
 #print("debug, weights of first layer")
 #print(weights)
 
-test_data = pd.read_csv('nn_representations.csv')
+test_data = pd.read_csv('./CSVs/nn_representations.csv')
 #svinoume tin prwti stili pou exei to data
 test_data = test_data.drop(test_data.columns[[0]], axis=1)
 
@@ -30,7 +30,7 @@ print("predicted, now printing shape")
 print('prediction result shape : ',result.shape)
 #print(result)
 
-actual_results = pd.read_csv('actual.csv')
+actual_results = pd.read_csv('./CSVs/actual.csv')
 actual_results = actual_results.drop(actual_results.columns[[0]], axis=1)
 
 #print(actual_results)
