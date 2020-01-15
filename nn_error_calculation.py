@@ -83,3 +83,15 @@ print(new_model.layers)
 
 result = new_model.predict(test_data, batch_size=32)
 print('predicted with new model')
+
+test_data = pd.read_csv('./CSVs/nn_representations.csv')
+#svinoume tin prwti stili pou exei to data
+test_data = test_data.drop(test_data.columns[[0]], axis=1)
+
+result = new_model.predict(test_data, batch_size=32)
+print("predicted with new model, now printing shape")
+print('prediction result shape : ',result.shape)
+
+print('predicted with new model')
+print(type(result))
+np.savetxt('result.out', result)
