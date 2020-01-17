@@ -21,9 +21,41 @@ weights = model.layers[0].get_weights()
 #print("debug, weights of first layer")
 #print(weights)
 
-test_data = pd.read_csv('./CSVs/nn_representations.csv')
+"""
+test_data = pd.read_csv('./CSVs/nn_representations.csv', header=None,index_col=0)
+print('test data head indexcol = 0')
+print(test_data.head())
+test_data = pd.read_csv('./CSVs/nn_representations.csv',header=None,index_col=False)
+print('test data head false')
+print(test_data.head())
+test_data = pd.read_csv('./CSVs/nn_representations.csv',header=None,index_col=None)
+print('test data head none')
+print(test_data.head())
+"""
+
+
 #svinoume tin prwti stili pou exei to data
-test_data = test_data.drop(test_data.columns[[0]], axis=1)
+test_data = pd.read_csv('./CSVs/nn_representations.csv', header=None)
+print('test data head prin to drop')
+print(test_data.head())
+
+#dropping first column
+# If you know the name of the column skip this
+first_column = test_data.columns[0]
+# Delete first
+test_data = test_data.drop([first_column], axis=1)
+print('test data head')
+
+print(test_data.head())
+
+test_data.to_csv("temp.csv", index=False, sep=' ', encoding='utf-8')
+
+with open("temp.csv",'r') as f:
+    with open("nn_representations_cleaned.csv",'w') as f1:
+        next(f) # skip header line
+        for line in f:
+            f1.write(line)
+
 
 result = model.predict(test_data, batch_size=32)
 print("predicted, now printing shape")
